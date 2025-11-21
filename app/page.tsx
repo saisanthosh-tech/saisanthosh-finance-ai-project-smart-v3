@@ -1,4 +1,8 @@
 "use client";
+import Heatmap from "./components/Heatmap";
+import DownloadPdfButton from "./components/DownloadPdfButton";
+
+//import Heatmap from "./components/Heatmap";
 
 import ForecastChart from "./components/ForecastChart";
 import Goals from "./components/Goals"; // optional — keep if you have this component
@@ -499,6 +503,21 @@ async function loadGoals() {
     </button>
   </div>
 </section>
+
+{/* //<Heatmap user={user} /> */}
+{/* <Heatmap userId={user.id} days={300} /> */}
+{/* <Heatmap user={user} /> */}
+
+
+
+<Heatmap transactions={transactions} />
+
+{/* <DownloadPdfButton user={user} /> */}
+
+
+
+<DownloadPdfButton transactions={transactions} />
+
 
 
 
