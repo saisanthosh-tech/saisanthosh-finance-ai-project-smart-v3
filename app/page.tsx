@@ -120,24 +120,36 @@ export default function FinanceTracker() {
 
   // ---------------- Goals APIs ----------------
 
-  async function loadGoals() {
-    if (!user) return;
-    try {
-      // your backend endpoint appeared to accept GET with query param earlier
-      const res = await fetch(`/api/goals?userId=${user.id}`);
-      if (!res.ok) {
-        console.warn("Failed to load goals", await res.text());
-        setGoals([]);
-        return;
-      }
-      const json = await res.json();
-      // Expecting json.goals array
-      setGoals(json.goals || []);
-    } catch (err) {
-      console.error("loadGoals error", err);
-      setGoals([]);
-    }
-  }
+  // async function loadGoals() {
+  //   if (!user) return;
+  //   try {
+  //     // your backend endpoint appeared to accept GET with query param earlier
+  //     const res = await fetch(`/api/goals?userId=${user.id}`);
+  //     if (!res.ok) {
+  //       console.warn("Failed to load goals", await res.text());
+  //       setGoals([]);
+  //       return;
+  //     }
+  //     const json = await res.json();
+  //     // Expecting json.goals array
+  //     setGoals(json.goals || []);
+  //   } catch (err) {
+  //     console.error("loadGoals error", err);
+  //     setGoals([]);
+  //   }
+  // }
+async function loadGoals() {
+  if (!user) return;
+
+  const res = await fetch(`/api/goals?userId=${user.id}`);
+  const json = await res.json();
+
+  setGoals(json.goals || []);
+}
+
+   useEffect(() => {
+    loadGoals();   // runs when the user becomes available
+  }, [user]); 
 
   async function addSavings() {
     if (!selectedGoal || !saveAmount) return alert("Fill all fields");
@@ -404,7 +416,9 @@ export default function FinanceTracker() {
         {/* Goals list component (optional) */}
         {/* If you have a Goals component that renders the goal cards, keep it. */}
 
-        <Goals user={user} />
+        {/* <Goals user={user} /> */}
+        <Goals user={user} reloadGoals={loadGoals} />
+
 
         {/* <Goals user={user} goals={goals} /> */}
 
